@@ -32,301 +32,627 @@ function wml_actions.show_quick_debug ( cfg )
 	if lua_dialog_unit and lua_dialog_unit.valid then -- to avoid indexing a nil value
 		--creating dialog here
 		-- read only labels
-		local read_only_panel = T.grid { T.row { T.column { horizontal_alignment = "left",
-									border = "all",
-									border_size = 5,
-									T.label { label = _"X" } },
-							T.column { horizontal_alignment = "left",
-									border = "all",
-									border_size = 5,
-									T.label { id = "unit_x" } } }, --unit.x
-						T.row { T.column { horizontal_alignment = "left",
-									border = "all",
-									border_size = 5,
-									T.label { label = _"Y" } },
-							T.column { horizontal_alignment = "left",
-									border = "all",
-									border_size = 5,
-									T.label { id = "unit_y" } } }, --unit.y
-						T.row { T.column { horizontal_alignment = "left",
-									border = "all",
-									border_size = 5,
-									T.label { label = _"ID" } },
-							T.column { horizontal_alignment = "left",
-									border = "all",
-									border_size = 5,
-									T.label { id = "unit_id" } } }, --unit.id
-						T.row { T.column { horizontal_alignment = "left",
-									border = "all",
-									border_size = 5,
-									T.label { label = _"Valid" } },
-							T.column { horizontal_alignment = "left",
-									border = "all",
-									border_size = 5,
-									T.label { id = "unit_valid" } } }, --unit.valid
-						T.row { T.column { horizontal_alignment = "left",
-									border = "all",
-									border_size = 5,
-									T.label { label = _"Type" } },
-							T.column { horizontal_alignment = "left",
-									border = "all",
-									border_size = 5,
-									T.label { id = "unit_type" } } }, --unit.type
-						T.row { T.column { horizontal_alignment = "left",
-									border = "all",
-									border_size = 5,
-									T.label { label = _"Name" } },
-							T.column { horizontal_alignment = "left",
-									border = "all",
-									border_size = 5,
-									T.label { id = "unit_name" } } }, --unit.name
-						T.row { T.column { horizontal_alignment = "left",
-									border = "all",
-									border_size = 5,
-									T.label { label = _"Can recruit" } },
-							T.column { horizontal_alignment = "left",
-									border = "all",
-									border_size = 5,
-									T.label { id = "unit_canrecruit" } } }, --unit.canrecruit
+		local read_only_panel = T.grid {
+						T.row {
+							T.column {
+								horizontal_alignment = "left",
+								border = "all",
+								border_size = 5,
+								T.label {
+									label = _"X"
+								}
+							},
+							T.column {
+								horizontal_alignment = "left",
+								border = "all",
+								border_size = 5,
+								T.label { --unit.x
+									id = "unit_x"
+								}
+							}
+						},
+						T.row {
+							T.column {
+								horizontal_alignment = "left",
+								border = "all",
+								border_size = 5,
+								T.label {
+									label = _"Y"
+								}
+							},
+							T.column {
+								horizontal_alignment = "left",
+								border = "all",
+								border_size = 5,
+								T.label {
+									id = "unit_y" --unit.y
+								}
+							}
+						},
+						T.row {
+							T.column {
+								horizontal_alignment = "left",
+								border = "all",
+								border_size = 5,
+								T.label {
+									label = _"ID"
+								}
+							},
+							T.column {
+								horizontal_alignment = "left",
+								border = "all",
+								border_size = 5,
+								T.label {
+									id = "unit_id" --unit.id
+								}
+							}
+						},
+						T.row {
+							T.column {
+								horizontal_alignment = "left",
+								border = "all",
+								border_size = 5,
+								T.label {
+									label = _"Valid"
+								}
+							},
+							T.column {
+								horizontal_alignment = "left",
+								border = "all",
+								border_size = 5,
+								T.label {
+									id = "unit_valid" --unit.valid
+								}
+							}
+						},
+						T.row {
+							T.column {
+								horizontal_alignment = "left",
+								border = "all",
+								border_size = 5,
+								T.label {
+									label = _"Type"
+								}
+							},
+							T.column {
+								horizontal_alignment = "left",
+								border = "all",
+								border_size = 5,
+								T.label {
+									id = "unit_type" --unit.type
+								}
+							}
+						},
+						T.row {
+							T.column {
+								horizontal_alignment = "left",
+								border = "all",
+								border_size = 5,
+								T.label {
+									label = _"Name"
+								}
+							},
+							T.column {
+								horizontal_alignment = "left",
+								border = "all",
+								border_size = 5,
+								T.label {
+									id = "unit_name" --unit.name
+								}
+							}
+						},
+						T.row {
+							T.column {
+								horizontal_alignment = "left",
+								border = "all",
+								border_size = 5,
+								T.label {
+									label = _"Can recruit"
+								}
+							},
+							T.column {
+								horizontal_alignment = "left",
+								border = "all",
+								border_size = 5,
+								T.label {
+									id = "unit_canrecruit"--unit.canrecruit
+								}
+							}
 						}
+					}
 
-		local status_checkbuttons = T.grid { T.row { T.column { horizontal_alignment = "left",
-									border = "all",
-									border_size = 5,
-									T.toggle_button { label = _"Poisoned", id = "poisoned_checkbutton" } },
-								T.column { horizontal_alignment = "left",
-									border = "all",
-									border_size = 5,
-									T.toggle_button { label = _"Slowed", id = "slowed_checkbutton" } },
-								T.column { horizontal_alignment = "left",
-									border = "all",
-									border_size = 5,
-									T.toggle_button { label = _"Petrified", id = "petrified_checkbutton" } },
-								T.column { horizontal_alignment = "left",
-									border = "all",
-									border_size = 5,
-									T.spacer { } } },
-							T.row { T.column { horizontal_alignment = "left",
-									border = "all",
-									border_size = 5,
-									T.toggle_button { label = _"Uncovered", id = "uncovered_checkbutton" } },
-								T.column { horizontal_alignment = "left",
-									border = "all",
-									border_size = 5,
-									T.toggle_button { label = _"Guardian", id = "guardian_checkbutton" } },
-								T.column { horizontal_alignment = "left",
-									border = "all",
-									border_size = 5,
-									T.toggle_button { label = _"Unhealable", id = "unhealable_checkbutton" } },
-								T.column { horizontal_alignment = "left",
-									border = "all",
-									border_size = 5,
-									T.toggle_button { label = _"Stunned", id = "stunned_checkbutton" } }
-							} }
-
-
-		local facing_radiobutton = T.horizontal_listbox { id = "facing_listbox",
-								T.list_definition { T.row { T.column { T.toggle_button { id = "facing_radiobutton" } } } },
-													T.list_data {
-															T.row { horizontal_alignment = "left",
-																border = "all",
-																border_size = 5,
-																T.column { label = _"nw" } },
-															T.row { horizontal_alignment = "left",
-																border = "all",
-																border_size = 5,
-																T.column { label = _"ne" } },
-															T.row { horizontal_alignment = "left",
-																border = "all",
-																border_size = 5,
-																T.column { label = _"n" } },
-															T.row { horizontal_alignment = "left",
-																border = "all",
-																border_size = 5,
-																T.column { label = _"sw" } },
-															T.row { horizontal_alignment = "left",
-																border = "all",
-																border_size = 5,
-																T.column { label = _"se" } },
-															T.row { horizontal_alignment = "left",
-																border = "all",
-																border_size = 5,
-																T.column { label = _"s" } }
-								} }
-
-
-		local misc_checkbuttons = T.grid { T.row { T.column { horizontal_alignment = "left",
-									border = "all",
-									border_size = 5,
-									T.toggle_button { label = _"Resting", id = "resting_checkbutton" } }, --unit.resting
-							T.column { horizontal_alignment = "left",
-									border = "all",
-									border_size = 5,
-									T.toggle_button { label = _"Hidden", id = "hidden_checkbutton" } } },--unit.hidden
+		local status_checkbuttons = T.grid {
+						T.row {
+							T.column {
+								horizontal_alignment = "left",
+								border = "all",
+								border_size = 5,
+								T.toggle_button {
+									label = _"Poisoned",
+									id = "poisoned_checkbutton"
+								}
+							},
+							T.column {
+								horizontal_alignment = "left",
+								border = "all",
+								border_size = 5,
+								T.toggle_button {
+									label = _"Slowed",
+									id = "slowed_checkbutton"
+								}
+							},
+							T.column {
+								horizontal_alignment = "left",
+								border = "all",
+								border_size = 5,
+								T.toggle_button {
+									label = _"Petrified",
+									id = "petrified_checkbutton"
+								}
+							},
+							T.column {
+								horizontal_alignment = "left",
+								border = "all",
+								border_size = 5,
+								T.spacer {
+								}
+							}
+						},
+						T.row {
+							T.column {
+								horizontal_alignment = "left",
+								border = "all",
+								border_size = 5,
+								T.toggle_button {
+									label = _"Uncovered",
+									id = "uncovered_checkbutton"
+								}
+							},
+							T.column {
+								horizontal_alignment = "left",
+								border = "all",
+								border_size = 5,
+								T.toggle_button {
+									label = _"Guardian",
+									id = "guardian_checkbutton"
+								}
+							},
+							T.column {
+								horizontal_alignment = "left",
+								border = "all",
+								border_size = 5,
+								T.toggle_button {
+									label = _"Unhealable",
+									id = "unhealable_checkbutton"
+								}
+							},
+							T.column {
+								horizontal_alignment = "left",
+								border = "all",
+								border_size = 5,
+								T.toggle_button {
+									label = _"Stunned",
+									id = "stunned_checkbutton"
+								}
+							}
 						}
+					}
+
+
+		local facing_radiobutton = T.horizontal_listbox {
+						id = "facing_listbox",
+						T.list_definition {
+							T.row {
+								T.column {
+									T.toggle_button {
+										id = "facing_radiobutton"
+									}
+								}
+							}
+						},
+						T.list_data {
+							T.row {
+								horizontal_alignment = "left",
+								border = "all",
+								border_size = 5,
+								T.column {
+									label = _"nw"
+								}
+							},
+							T.row {
+								horizontal_alignment = "left",
+								border = "all",
+								border_size = 5,
+								T.column {
+									label = _"ne"
+								}
+							},
+							T.row {
+								horizontal_alignment = "left",
+								border = "all",
+								border_size = 5,
+								T.column {
+									label = _"n"
+								}
+							},
+							T.row {
+								horizontal_alignment = "left",
+								border = "all",
+								border_size = 5,
+								T.column {
+									label = _"sw"
+								}
+							},
+							T.row {
+								horizontal_alignment = "left",
+								border = "all",
+								border_size = 5,
+								T.column {
+									label = _"se"
+								}
+							},
+							T.row {
+								horizontal_alignment = "left",
+								border = "all",
+								border_size = 5,
+								T.column {
+									label = _"s"
+								}
+							}
+						}
+					}
+
+
+		local misc_checkbuttons = T.grid {
+						T.row {
+							T.column {
+								horizontal_alignment = "left",
+								border = "all",
+								border_size = 5,
+								T.toggle_button {
+									label = _"Resting",
+									id = "resting_checkbutton" --unit.resting
+								}
+							},
+							T.column {
+								horizontal_alignment = "left",
+								border = "all",
+								border_size = 5,
+								T.toggle_button {
+									label = _"Hidden",
+									id = "hidden_checkbutton" --unit.hidden
+								}
+							}
+						}
+					}
 
 		-- buttonbox
-		local buttonbox = T.grid { T.row { T.column { T.button { label = _"OK", return_value = 1 } },
-						T.column { T.spacer { width = 10 } },
-						T.column { T.button { label = _"Cancel", return_value = 2 } }
-					} }
+		local buttonbox = T.grid {
+					T.row {
+						T.column {
+							T.button {
+								label = _"OK",
+								return_value = 1
+							}
+						},
+						T.column {
+							T.spacer {
+								width = 10
+							}
+						},
+						T.column {
+							T.button {
+								label = _"Cancel",
+								return_value = 2
+							}
+						}
+					}
+				}
 
 		-- widgets for modifying unit
 		local modify_panel = T.grid { -- side slider
-						T.row { T.column { horizontal_alignment = "right",
-								border = "all",
-								border_size = 5,
-								T.label { label = _"Side" } },
-							T.column { vertical_grow = true,
-								horizontal_grow = true,
-								border = "all",
-								border_size = 5,
-								T.slider { minimum_value = 1,
-										maximum_value = math.max( 2, #wesnoth.sides ), -- to avoid crash if there is only one side
-										step_size = 1,
-										id = "unit_side_slider" } } },--unit.side
-						-- hitpoints slider
-						T.row { T.column { horizontal_alignment = "right",
-								border = "all",
-								border_size = 5,
-								T.label { label = _"Hitpoints" } },
-							T.column { vertical_grow = true,
-								horizontal_grow = true,
-								border = "all",
-								border_size = 5,
-								T.slider { minimum_value = math.min(0, lua_dialog_unit.hitpoints),
-										maximum_value = math.max(lua_dialog_unit.max_hitpoints * oversize_factor, lua_dialog_unit.hitpoints),
-										minimum_value_label = _"Kill unit",
-										--maximum_value_label = _"Full health",
-										step_size = 1,
-										id = "unit_hitpoints_slider" } } },--unit.hitpoints
-						-- experience slider
-						T.row { T.column { horizontal_alignment = "right",
-								border = "all",
-								border_size = 5,
-								T.label { label = _"Experience" } },
-							T.column { vertical_grow = true,
-								horizontal_grow = true,
-								border = "all",
-								border_size = 5,
-								T.slider { minimum_value = math.min(0, lua_dialog_unit.experience),
-										maximum_value = math.max(lua_dialog_unit.max_experience * oversize_factor, lua_dialog_unit.experience),
-										--maximum_value_label = _"Level up",
-										step_size = 1,
-										id = "unit_experience_slider" } } },--unit.experience
-						-- moves slider
-						T.row { T.column { horizontal_alignment = "right",
-								border = "all",
-								border_size = 5,
-								T.label { label = _"Moves" } },
-							T.column { vertical_grow = true,
-								horizontal_grow = true,
-								border = "all",
-								border_size = 5,
-								T.slider { minimum_value = 0,
-										-- to avoid crashing if max_moves == 0
-										maximum_value = math.max(1, lua_dialog_unit.max_moves * oversize_factor, lua_dialog_unit.moves),
-										step_size = 1,
-										id = "unit_moves_slider" } } },--unit.moves
-						-- attacks slider
-						T.row { T.column { horizontal_alignment = "right",
-								border = "all",
-								border_size = 5,
-								T.label { label = _"Attacks left" } },
-							T.column { vertical_grow = true,
-								horizontal_grow = true,
-								border = "all",
-								border_size = 5,
-								T.slider { minimum_value = 0,
-										-- to avoid crashing if unit has max_attacks == 0
-										maximum_value = math.max(1, lua_dialog_unit.max_attacks * oversize_factor, lua_dialog_unit.attacks_left),
-										step_size = 1,
-										id = "unit_attacks_slider" } } },--unit.attacks_left
-						-- extra recruit
-						T.row { T.column { horizontal_alignment = "right",
-								border = "all",
-								border_size = 5,
-								T.label { label = _"Extra recruit" } },
-							T.column { vertical_grow = true,
-								horizontal_grow = true,
-								border = "all",
-								border_size = 5,
-								T.text_box { id = "textbox_extra_recruit", history = "other_recruits" } } },--unit.extra_recruit
-						-- advances to
-						T.row { T.column { horizontal_alignment = "right",
-								border = "all",
-								border_size = 5,
-								T.label { label = _"Advances to" } },
-							T.column { vertical_grow = true,
-								horizontal_grow = true,
-								border = "all",
-								border_size = 5,
-								T.text_box { id = "textbox_advances_to", history = "other_advancements" } } },--unit.advances_to
-						-- role
-						T.row { T.column { horizontal_alignment = "right",
-								border = "all",
-								border_size = 5,
-								T.label { label = _"Role" } },
-							T.column { vertical_grow = true,
-								horizontal_grow = true,
-								border = "all",
-								border_size = 5,
-								T.text_box { id = "textbox_role", history = "other_roles" } } },--unit.role
-						-- statuses
-						T.row { T.column { horizontal_alignment = "right",
-								border = "all",
-								border_size = 5,
-								T.label { label = _"Status" } },
-							T.column { horizontal_alignment = "left",
-								status_checkbuttons } },
-						-- facing
-						T.row { T.column { horizontal_alignment = "right",
-								border = "all",
-								border_size = 5,
-								T.label { label = _"Facing" } },
-							T.column { horizontal_alignment = "left",
-								border = "all",
-								border_size = 5,
-								facing_radiobutton } },
-						-- misc
-						T.row { T.column { horizontal_alignment = "right",
-								border = "all",
-								border_size = 5,
-								T.label { label = _"Misc" } },
-							T.column { horizontal_alignment = "left",
-								misc_checkbuttons } },
+					T.row {
+						T.column {
+							horizontal_alignment = "right",
+							border = "all",
+							border_size = 5,
+							T.label {
+								label = _"Side"
+							}
+						},
+						T.column {
+							vertical_grow = true,
+							horizontal_grow = true,
+							border = "all",
+							border_size = 5,
+							T.slider {
+								minimum_value = 1,
+								maximum_value = math.max( 2, #wesnoth.sides ), -- to avoid crash if there is only one side
+								step_size = 1,
+								id = "unit_side_slider" --unit.side
+							}
 						}
+					},
+					-- hitpoints slider
+					T.row {
+						T.column {
+							horizontal_alignment = "right",
+							border = "all",
+							border_size = 5,
+							T.label {
+								label = _"Hitpoints"
+							}
+						},
+						T.column {
+							vertical_grow = true,
+							horizontal_grow = true,
+							border = "all",
+							border_size = 5,
+							T.slider {
+								minimum_value = math.min(0, lua_dialog_unit.hitpoints),
+								maximum_value = math.max(lua_dialog_unit.max_hitpoints * oversize_factor, lua_dialog_unit.hitpoints),
+								minimum_value_label = _"Kill unit",
+								--maximum_value_label = _"Full health",
+								step_size = 1,
+								id = "unit_hitpoints_slider" --unit.hitpoints
+							}
+						}
+					},
+					-- experience slider
+					T.row {
+						T.column {
+							horizontal_alignment = "right",
+							border = "all",
+							border_size = 5,
+							T.label {
+								label = _"Experience"
+							}
+						},
+						T.column {
+							vertical_grow = true,
+							horizontal_grow = true,
+							border = "all",
+							border_size = 5,
+							T.slider {
+								minimum_value = math.min(0, lua_dialog_unit.experience),
+								maximum_value = math.max(lua_dialog_unit.max_experience * oversize_factor, lua_dialog_unit.experience),
+								--maximum_value_label = _"Level up",
+								step_size = 1,
+								id = "unit_experience_slider" --unit.experience
+							}
+						}
+					},
+					-- moves slider
+					T.row {
+						T.column {
+							horizontal_alignment = "right",
+							border = "all",
+							border_size = 5,
+							T.label {
+								label = _"Moves"
+							}
+						},
+						T.column {
+							vertical_grow = true,
+							horizontal_grow = true,
+							border = "all",
+							border_size = 5,
+							T.slider {
+								minimum_value = 0,
+								-- to avoid crashing if max_moves == 0
+								maximum_value = math.max(1, lua_dialog_unit.max_moves * oversize_factor, lua_dialog_unit.moves),
+								step_size = 1,
+								id = "unit_moves_slider" --unit.moves
+							}
+						}
+					},
+					-- attacks slider
+					T.row {
+						T.column {
+							horizontal_alignment = "right",
+							border = "all",
+							border_size = 5,
+							T.label {
+								label = _"Attacks left"
+							}
+						},
+						T.column {
+							vertical_grow = true,
+							horizontal_grow = true,
+							border = "all",
+							border_size = 5,
+							T.slider {
+								minimum_value = 0,
+								-- to avoid crashing if unit has max_attacks == 0
+								maximum_value = math.max(1, lua_dialog_unit.max_attacks * oversize_factor, lua_dialog_unit.attacks_left),
+								step_size = 1,
+								id = "unit_attacks_slider" --unit.attacks_left
+							}
+						}
+					},
+					-- extra recruit
+					T.row {
+						T.column {
+							horizontal_alignment = "right",
+							border = "all",
+							border_size = 5,
+							T.label {
+								label = _"Extra recruit"
+							}
+						},
+						T.column {
+							vertical_grow = true,
+							horizontal_grow = true,
+							border = "all",
+							border_size = 5,
+							T.text_box {
+								id = "textbox_extra_recruit", --unit.extra_recruit
+								history = "other_recruits"
+							}
+						}
+					},
+					-- advances to
+					T.row {
+						T.column {
+							horizontal_alignment = "right",
+							border = "all",
+							border_size = 5,
+							T.label {
+								label = _"Advances to"
+							}
+						},
+						T.column {
+							vertical_grow = true,
+							horizontal_grow = true,
+							border = "all",
+							border_size = 5,
+							T.text_box {
+								id = "textbox_advances_to", --unit.advances_to
+								history = "other_advancements"
+							}
+						}
+					},
+					-- role
+					T.row {
+						T.column {
+							horizontal_alignment = "right",
+							border = "all",
+							border_size = 5,
+							T.label {
+								label = _"Role"
+							}
+						},
+						T.column {
+							vertical_grow = true,
+							horizontal_grow = true,
+							border = "all",
+							border_size = 5,
+							T.text_box {
+								id = "textbox_role", --unit.role
+								history = "other_roles"
+							}
+						}
+					},
+					-- statuses
+					T.row {
+						T.column {
+							horizontal_alignment = "right",
+							border = "all",
+							border_size = 5,
+							T.label {
+								label = _"Status"
+							}
+						},
+						T.column {
+							horizontal_alignment = "left",
+							status_checkbuttons
+						}
+					},
+					-- facing
+					T.row {
+						T.column {
+							horizontal_alignment = "right",
+							border = "all",
+							border_size = 5,
+							T.label {
+								label = _"Facing"
+							}
+						},
+						T.column {
+							horizontal_alignment = "left",
+							border = "all",
+							border_size = 5,
+							facing_radiobutton
+						}
+					},
+					-- misc
+					T.row {
+						T.column {
+							horizontal_alignment = "right",
+							border = "all",
+							border_size = 5,
+							T.label {
+								label = _"Misc"
+							}
+						},
+						T.column {
+							horizontal_alignment = "left",
+							misc_checkbuttons
+						}
+					}
+				}
 
-		local debug_dialog = { T.helptip { id="tooltip_large" }, -- mandatory field
+		local debug_dialog = {
+			T.helptip { id="tooltip_large" }, -- mandatory field
 			T.tooltip { id="tooltip_large" }, -- mandatory field
 			maximum_height = 600,
 			maximum_width = 800,
 			T.grid { -- Title
-				T.row { T.column { horizontal_alignment = "left",
-							grow_factor = 1,
-							border = "all",
-							border_size = 5,
-							T.label { definition = "title", label = _"Quick Debug Menu" } } },
+				T.row {
+					T.column { 
+						horizontal_alignment = "left",
+						grow_factor = 1,
+						border = "all",
+						border_size = 5,
+						T.label {
+							definition = "title",
+							label = _"Quick Debug Menu"
+						}
+					}
+				},
 				-- Subtitile
-				T.row { T.column { horizontal_alignment = "left",
-							border = "all",
-							border_size = 5,
-							T.label { label = _"Set the desired parameters, then press OK to confirm or Cancel to exit" } } },
+				T.row {
+					T.column {
+						horizontal_alignment = "left",
+						border = "all",
+						border_size = 5,
+						T.label {
+							label = _"Set the desired parameters, then press OK to confirm or Cancel to exit"
+						}
+					}
+				},
 				-- non-modifiable proxies, melinath's layout
-				T.row { T.column { T.grid {
-								T.row { T.column { vertical_alignment = "top",
-										T.grid { T.row { T.column { vertical_alignment = "center",
-														horizontal_alignment = "center",
-														border = "all",
-														border_size = 5,
-														T.image { id = "unit_image" } } }, -- unit sprite
-											T.row { T.column { read_only_panel } }
-										} }, -- terminator for read-only proxies
-									-- modification part
-									T.column { modify_panel } } } } }, -- terminator for grid
+				T.row {
+					T.column {
+						T.grid {
+							T.row {
+								T.column {
+									vertical_alignment = "top",
+									T.grid {
+										T.row {
+											T.column {
+												vertical_alignment = "center",
+												horizontal_alignment = "center",
+												border = "all",
+												border_size = 5,
+												T.image {
+													id = "unit_image" -- unit sprite
+												}
+											}
+										},
+										T.row {
+											T.column {
+												read_only_panel
+											}
+										}
+									}
+								},
+								-- modification part
+								T.column {
+									modify_panel
+								}
+							}
+						}
+					}
+				},
 				-- button box
-				T.row { T.column { buttonbox } }
-				} }
+				T.row {
+					T.column {
+						buttonbox
+					}
+				}
+			}
+		}
 
 		local temp_table = { } -- to store values before checking if user allowed modifying
 
@@ -491,100 +817,419 @@ function wml_actions.show_side_debug ( cfg )
 
 		-- experimenting with macrowidgets... sort of
 		--buttonbox
-		local buttonbox = T.grid { T.row { T.column { T.button { label = _"OK", return_value = 1 } },
-						T.column { T.spacer { width = 10 } },
-						T.column { T.button { label = _"Cancel", return_value = 2 } } } }
+		local buttonbox = T.grid {
+					T.row {
+						T.column {
+							T.button {
+								label = _"OK",
+								return_value = 1
+							}
+						},
+						T.column {
+							T.spacer {
+								width = 10
+							}
+						},
+						T.column {
+							T.button {
+								label = _"Cancel",
+								return_value = 2
+							}
+						}
+					}
+				}
 
 		-- read-only labels
 		-- fields here: total_income, fog, shroud, hidden, name, color
-		local read_only_panel = T.grid { T.row { T.column { horizontal_alignment = "left", border = "all", border_size = 5, T.label { label = _"Total income" } },
-							T.column { horizontal_alignment = "left", border = "all", border_size = 5, T.label { id = "total_income_label" } } },
-						T.row { T.column { horizontal_alignment = "left", border = "all", border_size = 5, T.label { label = _"Fog" } },
-							T.column { horizontal_alignment = "left", border = "all", border_size = 5, T.label { id = "fog_label" } } },
-						T.row { T.column { horizontal_alignment = "left", border = "all", border_size = 5, T.label { label = _"Shroud" } },
-							T.column { horizontal_alignment = "left", border = "all", border_size = 5, T.label { id = "shroud_label" } } },
-						T.row { T.column { horizontal_alignment = "left", border = "all", border_size = 5, T.label { label = _"Hidden" } },
-							T.column { horizontal_alignment = "left", border = "all", border_size = 5, T.label { id = "hidden_label" } } },
-						T.row { T.column { horizontal_alignment = "left", border = "all", border_size = 5, T.label { label = _"Name" } },
-							T.column { horizontal_alignment = "left", border = "all", border_size = 5, T.label { id = "name_label" } } },
-						T.row { T.column { horizontal_alignment = "left", border = "all", border_size = 5, T.label { label = _"Color" } },
-							T.column { horizontal_alignment = "left", border = "all", border_size = 5, T.label { id = "color_label" } } }
+		local read_only_panel = T.grid {
+						T.row {
+							T.column {
+								horizontal_alignment = "left",
+								border = "all",
+								border_size = 5,
+								T.label {
+									label = _"Total income"
+								}
+							},
+							T.column {
+								horizontal_alignment = "left",
+								border = "all",
+								border_size = 5,
+								T.label {
+									id = "total_income_label"
+								}
+							}
+						},
+						T.row {
+							T.column {
+								horizontal_alignment = "left",
+								border = "all",
+								border_size = 5,
+								T.label {
+									label = _"Fog"
+								}
+							},
+							T.column {
+								horizontal_alignment = "left",
+								border = "all",
+								border_size = 5,
+								T.label {
+									id = "fog_label"
+								}
+							}
+						},
+						T.row {
+							T.column {
+								horizontal_alignment = "left",
+								border = "all",
+								border_size = 5,
+								T.label {
+									label = _"Shroud"
+								}
+							},
+							T.column {
+								horizontal_alignment = "left",
+								border = "all",
+								border_size = 5,
+								T.label {
+									id = "shroud_label"
+								}
+							}
+						},
+						T.row {
+							T.column {
+								horizontal_alignment = "left",
+								border = "all",
+								border_size = 5,
+								T.label {
+									label = _"Hidden"
+								}
+							},
+							T.column {
+								horizontal_alignment = "left",
+								border = "all",
+								border_size = 5,
+								T.label {
+									id = "hidden_label"
+								}
+							}
+						},
+						T.row {
+							T.column {
+								horizontal_alignment = "left",
+								border = "all",
+								border_size = 5,
+								T.label {
+									label = _"Name"
+								}
+							},
+							T.column {
+								horizontal_alignment = "left",
+								border = "all",
+								border_size = 5,
+								T.label {
+									id = "name_label"
+								}
+							}
+						},
+						T.row {
+							T.column {
+								horizontal_alignment = "left",
+								border = "all",
+								border_size = 5,
+								T.label {
+									label = _"Color"
+								}
+							},
+							T.column {
+								horizontal_alignment = "left",
+								border = "all",
+								border_size = 5,
+								T.label {
+									id = "color_label"
+								}
+							}
 						}
+					}
 
 		-- controller radiobutton
 		-- values here: ai, human, null, human_ai, network, network_ai
-		local radiobutton = T.horizontal_listbox { id = "controller_listbox",
-							T.list_definition { T.row { T.column { T.toggle_button { id = "controller_radiobutton" } } } },
-							T.list_data { T.row { horizontal_alignment = "left", border = "all", border_size = 5, T.column { label = _"ai" } },
-									T.row { horizontal_alignment = "left", border = "all", border_size = 5, T.column { label = _"human" } },
-									T.row { horizontal_alignment = "left", border = "all", border_size = 5, T.column { label = _"human_ai" } },
-									T.row { horizontal_alignment = "left", border = "all", border_size = 5, T.column { label = _"network" } },
-									T.row { horizontal_alignment = "left", border = "all", border_size = 5, T.column { label = _"network_ai" } },
-									T.row { horizontal_alignment = "left", border = "all", border_size = 5, T.column { label = _"null" } } }
+		local radiobutton = T.horizontal_listbox {
+					id = "controller_listbox",
+					T.list_definition {
+						T.row {
+							T.column {
+								T.toggle_button {
+									id = "controller_radiobutton"
+								}
 							}
-
-		-- modifications panel
-		-- fields here: gold, village_gold, base_income, user_team_name, objectives_changed, team_name, controller
-		local modify_panel = T.grid { T.row { T.column { horizontal_alignment = "right", border = "all", border_size = 5, T.label { label = _"Gold" } },
-							T.column { horizontal_alignment = "left", border = "all", border_size = 5,
-								T.slider { minimum_value = math.min( 0, lua_dialog_side.gold ),
-										maximum_value = math.max( 1000, lua_dialog_side.gold ),
-										step_size = 1,
-										id = "side_gold_slider" } } },
-						T.row { T.column { horizontal_alignment = "right", border = "all", border_size = 5, T.label { label = _"Village gold" } },
-							T.column { horizontal_alignment = "left", border = "all", border_size = 5,
-								T.slider { minimum_value = math.min( 0, lua_dialog_side.village_gold ),
-										maximum_value = math.max( 10, lua_dialog_side.village_gold ),
-										step_size = 1,
-										id = "side_village_gold_slider" } } },
-						T.row { T.column { horizontal_alignment = "right", border = "all", border_size = 5, T.label { label = _"Base income" } },
-							T.column { horizontal_alignment = "left", border = "all", border_size = 5,
-								T.slider { minimum_value = math.min( -2, lua_dialog_side.base_income ),
-										maximum_value = math.max( 18, lua_dialog_side.base_income ),
-										step_size = 1,
-										id = "side_base_income_slider" } } },
-						T.row { T.column { horizontal_alignment = "right", border = "all", border_size = 5, T.label { label = _"User team name" } },
-							T.column { horizontal_alignment = "left", border = "all", border_size = 5,
-								T.text_box { id = "user_team_name_textbox", history = "other_user_team_names" } } },
-						T.row { T.column { horizontal_alignment = "right", border = "all", border_size = 5, T.label { label = _"Objectives changed" } },
-							T.column { horizontal_alignment = "left", border = "all", border_size = 5,
-								T.toggle_button { label = _"Yes", id = "objectives_changed_checkbutton" } } },
-						T.row { T.column { horizontal_alignment = "right", border = "all", border_size = 5, T.label { label = _"Team name" } },
-							T.column { horizontal_alignment = "left", border = "all", border_size = 5,
-								T.text_box { id = "team_name_textbox", history = "other_team_names" } } },
-						T.row { T.column { horizontal_alignment = "right", border = "all", border_size = 5, T.label { label = _"Color" } },
-							T.column { horizontal_alignment = "left", border = "all", border_size = 5,
-								T.slider { minimum_value = 1,
-										maximum_value = 9,
-										step_size = 1,
-										id = "side_color_slider" } } },
-						T.row { T.column { horizontal_alignment = "right", border = "all", border_size = 5, T.label { label = _"Controller" } },
-							T.column { horizontal_alignment = "left", border = "all", border_size = 5,
-								radiobutton } }
 						}
-
-		local side_dialog = { T.helptip { id="tooltip_large" }, -- mandatory field
-					T.tooltip { id="tooltip_large" }, -- mandatory field
-					maximum_height = 600,
-					maximum_width = 800,
-					T.grid { -- Title
-						T.row { T.column { horizontal_alignment = "left",
-								grow_factor = 1,
-								border = "all",
-								border_size = 5,
-								T.label { definition = "title", label = _"Side Debug Menu" } } },
-						-- Subtitile
-						T.row { T.column { horizontal_alignment = "left",
-								border = "all",
-								border_size = 5,
-								T.label { label = _"Set the desired parameters, then press OK to confirm or Cancel to exit" } } },
-						T.row { T.column { T.grid {
-									T.row { T.column { vertical_alignment = "top", read_only_panel },
-										T.column { modify_panel } }
-							} } },
-						T.row { T.column { buttonbox } }
+					},
+					T.list_data {
+						T.row {
+							horizontal_alignment = "left",
+							border = "all",
+							border_size = 5,
+							T.column {
+								label = _"ai"
+							}
+						},
+						T.row {
+							horizontal_alignment = "left",
+							border = "all",
+							border_size = 5,
+							T.column {
+								label = _"human"
+							}
+						},
+						T.row {
+							horizontal_alignment = "left",
+							border = "all",
+							border_size = 5,
+							T.column {
+								label = _"human_ai"
+							}
+						},
+						T.row {
+							horizontal_alignment = "left",
+							border = "all",
+							border_size = 5,
+							T.column {
+								label = _"network"
+							}
+						},
+						T.row {
+							horizontal_alignment = "left",
+							border = "all",
+							border_size = 5,
+							T.column {
+								label = _"network_ai"
+							}
+						},
+						T.row {
+							horizontal_alignment = "left",
+							border = "all",
+							border_size = 5,
+							T.column {
+								label = _"null"
+							}
 						}
 					}
+				}
+
+		-- modifications panel
+		-- fields here: gold, village_gold, base_income, user_team_name, objectives_changed, team_name, controller, color
+		local modify_panel = T.grid {
+					T.row {
+						T.column {
+							horizontal_alignment = "right",
+							border = "all",
+							border_size = 5,
+							T.label {
+								label = _"Gold"
+							}
+						},
+						T.column {
+							horizontal_alignment = "left",
+							border = "all",
+							border_size = 5,
+							T.slider {
+								minimum_value = math.min( 0, lua_dialog_side.gold ),
+								maximum_value = math.max( 1000, lua_dialog_side.gold ),
+								step_size = 1,
+								id = "side_gold_slider"
+							}
+						}
+					},
+					T.row {
+						T.column {
+							horizontal_alignment = "right",
+							border = "all",
+							border_size = 5,
+							T.label {
+								label = _"Village gold"
+							}
+						},
+						T.column {
+							horizontal_alignment = "left",
+							border = "all",
+							border_size = 5,
+							T.slider {
+								minimum_value = math.min( 0, lua_dialog_side.village_gold ),
+								maximum_value = math.max( 10, lua_dialog_side.village_gold ),
+								step_size = 1,
+								id = "side_village_gold_slider"
+							}
+						}
+					},
+					T.row {
+						T.column {
+							horizontal_alignment = "right",
+							border = "all",
+							border_size = 5,
+							T.label {
+								label = _"Base income"
+							}
+						},
+						T.column {
+							horizontal_alignment = "left",
+							border = "all",
+							border_size = 5,
+							T.slider {
+								minimum_value = math.min( -2, lua_dialog_side.base_income ),
+								maximum_value = math.max( 18, lua_dialog_side.base_income ),
+								step_size = 1,
+								id = "side_base_income_slider"
+							}
+						}
+					},
+					T.row {
+						T.column {
+							horizontal_alignment = "right",
+							border = "all",
+							border_size = 5,
+							T.label {
+								label = _"User team name"
+							}
+						},
+						T.column {
+							horizontal_alignment = "left",
+							border = "all",
+							border_size = 5,
+							T.text_box {
+								id = "user_team_name_textbox",
+								history = "other_user_team_names"
+							}
+						}
+					},
+					T.row {
+						T.column {
+							horizontal_alignment = "right",
+							border = "all",
+							border_size = 5,
+							T.label {
+								label = _"Objectives changed"
+							}
+						},
+						T.column {
+							horizontal_alignment = "left",
+							border = "all",
+							border_size = 5,
+							T.toggle_button {
+								label = _"Yes",
+								id = "objectives_changed_checkbutton"
+							}
+						}
+					},
+					T.row {
+						T.column {
+							horizontal_alignment = "right",
+							border = "all",
+							border_size = 5,
+							T.label {
+								label = _"Team name"
+							}
+						},
+						T.column {
+							horizontal_alignment = "left",
+							border = "all",
+							border_size = 5,
+							T.text_box {
+								id = "team_name_textbox",
+								history = "other_team_names"
+							}
+						}
+					},
+					T.row {
+						T.column {
+							horizontal_alignment = "right",
+							border = "all",
+							border_size = 5,
+							T.label {
+								label = _"Color"
+							}
+						},
+						T.column {
+							horizontal_alignment = "left",
+							border = "all",
+							border_size = 5,
+							T.slider {
+								minimum_value = 1,
+								maximum_value = 9,
+								step_size = 1,
+								id = "side_color_slider"
+							}
+						}
+					},
+					T.row {
+						T.column {
+							horizontal_alignment = "right",
+							border = "all",
+							border_size = 5,
+							T.label {
+								label = _"Controller"
+							}
+						},
+						T.column {
+							horizontal_alignment = "left",
+							border = "all",
+							border_size = 5,
+							radiobutton
+						}
+					}
+				}
+
+		local side_dialog = {
+			T.helptip { id="tooltip_large" }, -- mandatory field
+			T.tooltip { id="tooltip_large" }, -- mandatory field
+			maximum_height = 600,
+			maximum_width = 800,
+			T.grid { -- Title
+				T.row {
+					T.column {
+						horizontal_alignment = "left",
+						grow_factor = 1,
+						border = "all",
+						border_size = 5,
+						T.label {
+							definition = "title",
+							label = _"Side Debug Menu"
+						}
+					}
+				},
+				-- Subtitile
+				T.row {
+					T.column {
+						horizontal_alignment = "left",
+						border = "all",
+						border_size = 5,
+						T.label {
+							label = _"Set the desired parameters, then press OK to confirm or Cancel to exit"
+						}
+					}
+				},
+				T.row {
+					T.column {
+						T.grid {
+							T.row {
+								T.column {
+									vertical_alignment = "top",
+									read_only_panel
+								},
+								T.column {
+									modify_panel
+								}
+							}
+						}
+					}
+				},
+				T.row {
+					T.column {
+						buttonbox
+					}
+				}
+			}
+		}
 
 		local function preshow()
 			-- set widget values
@@ -600,8 +1245,10 @@ function wml_actions.show_side_debug ( cfg )
 			local color_name = lua_dialog_side.color
 			if color_number then
 				wesnoth.set_dialog_value ( color_names[ color_number ], "color_label" )
+				wesnoth.set_dialog_value ( color_number, "side_color_slider" )
 			else
 				wesnoth.set_dialog_value ( color_name, "color_label" )
+				wesnoth.set_dialog_value ( color_names[ color_number ], "side_color_slider" )
 			end
 			-- sliders
 			wesnoth.set_dialog_value ( lua_dialog_side.gold, "side_gold_slider" )
@@ -641,6 +1288,7 @@ function wml_actions.show_side_debug ( cfg )
 				temp_table.gold = wesnoth.get_dialog_value ( "side_gold_slider" )
 				temp_table.village_gold = wesnoth.get_dialog_value ( "side_village_gold_slider" )
 				temp_table.base_income = wesnoth.get_dialog_value ( "side_base_income_slider" )
+				temp_table.color = wesnoth.get_dialog_value ( "side_color_slider" )
 				-- text boxes
 				temp_table.user_team_name = wesnoth.get_dialog_value ( "user_team_name_textbox" )
 				temp_table.team_name = wesnoth.get_dialog_value ( "team_name_textbox" )
@@ -679,50 +1327,103 @@ end
 -- an alternative interface to pick items
 -- could be used in place of [message] with [option] tags
 function wml_actions.item_dialog( cfg )
-	local image_and_description = T.grid { T.row { T.column { vertical_alignment = "center",
-								horizontal_alignment = "center",
-								border = "all",
-								border_size = 5,
-								T.image { id = "image_name" } },
-							T.column { horizontal_alignment = "left",
-								border = "all",
-								border_size = 5,
-								T.scroll_label { id = "item_description" } }
-									} }
-
-	local buttonbox = T.grid { T.row { T.column { T.button { id = "take_button", return_value = 1 } },
-					T.column { T.spacer { width = 10 } },
-					T.column { T.button { id = "leave_button", return_value = 2 } }
-				} }
-
-	local item_dialog = { T.helptip { id="tooltip_large" }, -- mandatory field
-				T.tooltip { id="tooltip_large" }, -- mandatory field
-				maximum_height = 320,
-				maximum_width = 480,
-				T.grid { -- Title, will be the object name
-					T.row { T.column { horizontal_alignment = "left",
-							grow_factor = 1,
+	local image_and_description = T.grid {
+					T.row {
+						T.column {
+							vertical_alignment = "center",
+							horizontal_alignment = "center",
 							border = "all",
 							border_size = 5,
-							T.label { definition = "title", id = "item_name" } } },
-					-- Image and item description
-					T.row { T.column { image_and_description } }, -- grid teminator
-					-- Effect description
-					T.row { T.column { horizontal_alignment = "left",
+							T.image {
+								id = "image_name"
+							}
+						},
+						T.column {
+							horizontal_alignment = "left",
 							border = "all",
 							border_size = 5,
-							T.label { wrap = true, id = "item_effect" } } }, -- how to format?
-					-- button box
-					T.row { T.column { buttonbox } }
+							T.scroll_label {
+								id = "item_description"
+							}
+						}
 					}
 				}
 
+	local buttonbox = T.grid {
+				T.row {
+					T.column {
+						T.button {
+							id = "take_button",
+							return_value = 1
+						}
+					},
+					T.column {
+						T.spacer {
+							width = 10
+						}
+					},
+					T.column {
+						T.button {
+							id = "leave_button",
+							return_value = 2
+						}
+					}
+				}
+			}
+
+	local item_dialog = {
+		T.helptip { id="tooltip_large" }, -- mandatory field
+		T.tooltip { id="tooltip_large" }, -- mandatory field
+		maximum_height = 320,
+		maximum_width = 480,
+		T.grid { -- Title, will be the object name
+			T.row {
+				T.column {
+					horizontal_alignment = "left",
+					grow_factor = 1,
+					border = "all",
+					border_size = 5,
+					T.label {
+						definition = "title",
+						id = "item_name"
+					}
+				}
+			},
+			-- Image and item description
+			T.row {
+				T.column {
+					image_and_description
+				}
+			},
+			-- Effect description
+			T.row {
+				T.column {
+					horizontal_alignment = "left",
+					border = "all",
+					border_size = 5,
+					T.label {
+						wrap = true,
+						id = "item_effect"
+					}
+				}
+			},
+			-- button box
+			T.row {
+				T.column {
+					buttonbox
+				}
+			}
+		}
+	}
+
 	local function item_preshow()
 		-- here set all widget starting values
-		wesnoth.set_dialog_value ( cfg.name, "item_name" )
+		wesnoth.set_dialog_markup( true, "item_description" )
+		wesnoth.set_dialog_markup( true, "item_effect" )
+		wesnoth.set_dialog_value ( cfg.name or "", "item_name" )
 		wesnoth.set_dialog_value ( cfg.image or "", "image_name" )
-		wesnoth.set_dialog_value ( cfg.description, "item_description" )
-		wesnoth.set_dialog_value ( cfg.effect, "item_effect" )
+		wesnoth.set_dialog_value ( cfg.description or "", "item_description" )
+		wesnoth.set_dialog_value ( cfg.effect or "", "item_effect" )
 		wesnoth.set_dialog_value ( cfg.take_string or helper.wml_error( "Missing take_string= key in [item_dialog]" ), "take_button" )
 		wesnoth.set_dialog_value ( cfg.leave_string or helper.wml_error( "Missing leave_string= key in [item_dialog]" ), "leave_button" )
 	end
@@ -746,33 +1447,55 @@ end
 
 -- the three tags below are WML/Lua remakes of Javascript's standard dialogs alert(), confirm() and prompt()
 function wml_actions.alert( cfg )
-	local alert_dialog = { T.helptip { id="tooltip_large" }, -- mandatory field
-				T.tooltip { id="tooltip_large" }, -- mandatory field
-				maximum_height = 600,
-				maximum_width = 800,
-				T.grid { -- Title, will be the object name
-					T.row { T.column { horizontal_alignment = "left",
-							grow_factor = 1,
-							border = "all",
-							border_size = 5,
-							T.label { definition = "title", id = "title" } } },
-					T.row { T.column { vertical_alignment = "center",
-							horizontal_alignment = "center",
-							border = "all",
-							border_size = 5,
-							T.scroll_label { id = "message" } } },
-					T.row { T.column { vertical_alignment = "center",
-							horizontal_alignment = "center",
-							border = "all",
-							border_size = 5,
-							T.button { label = "OK", return_value = 1 } } }
+	local alert_dialog = {
+		T.helptip { id="tooltip_large" }, -- mandatory field
+		T.tooltip { id="tooltip_large" }, -- mandatory field
+		maximum_height = 600,
+		maximum_width = 800,
+		T.grid { -- Title, will be the object name
+			T.row {
+				T.column {
+					horizontal_alignment = "left",
+					grow_factor = 1,
+					border = "all",
+					border_size = 5,
+					T.label {
+						definition = "title",
+						id = "title"
 					}
 				}
+			},
+			T.row {
+				T.column {
+					vertical_alignment = "center",
+					horizontal_alignment = "center",
+					border = "all",
+					border_size = 5,
+					T.scroll_label {
+						id = "message"
+					}
+				}
+			},
+			T.row {
+				T.column {
+					vertical_alignment = "center",
+					horizontal_alignment = "center",
+					border = "all",
+					border_size = 5,
+					T.button {
+						label = "OK",
+						return_value = 1
+					}
+				}
+			}
+		}
+	}
 
 	local function preshow()
 		-- here set all widget starting values
-		wesnoth.set_dialog_value ( cfg.title, "title" )
-		wesnoth.set_dialog_value ( cfg.message, "message" )
+		wesnoth.set_dialog_markup( true, "message" )
+		wesnoth.set_dialog_value ( cfg.title or "", "title" )
+		wesnoth.set_dialog_value ( cfg.message or "", "message" )
 	end
 
 	local function postshow()
@@ -785,39 +1508,75 @@ end
 function wml_actions.confirm( cfg )
 	local variable = cfg.variable or helper.wml_error( "Missing variable= key in [confirm]" )
 
-	local buttonbox = T.grid { T.row { T.column { T.button { label = "OK", return_value = 1 } },
-					T.column { T.spacer { width = 10 } },
-					T.column { T.button { label = "Close", return_value = 2 } }
-				} }
-
-	local confirm_dialog = { T.helptip { id="tooltip_large" }, -- mandatory field
-				T.tooltip { id="tooltip_large" }, -- mandatory field
-				maximum_height = 600,
-				maximum_width = 800,
-				T.grid { -- Title, will be the object name
-					T.row { T.column { horizontal_alignment = "left",
-							grow_factor = 1,
-							border = "all",
-							border_size = 5,
-							T.label { definition = "title", id = "title" } } },
-					T.row { T.column { vertical_alignment = "center",
-							horizontal_alignment = "center",
-							border = "all",
-							border_size = 5,
-							T.scroll_label { id = "message" } } },
-					-- button box
-					T.row { T.column { vertical_alignment = "center",
-							horizontal_alignment = "center",
-							border = "all",
-							border_size = 5,
-							buttonbox } }
+	local buttonbox = T.grid {
+				T.row {
+					T.column {
+						T.button {
+							label = "OK",
+							return_value = 1
+						}
+					},
+					T.column {
+						T.spacer {
+							width = 10
+						}
+					},
+					T.column {
+						T.button {
+							label = "Close",
+							return_value = 2
+						}
 					}
 				}
+			}
+
+	local confirm_dialog = {
+		T.helptip { id="tooltip_large" }, -- mandatory field
+		T.tooltip { id="tooltip_large" }, -- mandatory field
+		maximum_height = 600,
+		maximum_width = 800,
+		T.grid { -- Title, will be the object name
+			T.row {
+				T.column {
+					horizontal_alignment = "left",
+					grow_factor = 1,
+					border = "all",
+					border_size = 5,
+					T.label {
+						definition = "title",
+						id = "title"
+					}
+				}
+			},
+			T.row {
+				T.column {
+					vertical_alignment = "center",
+					horizontal_alignment = "center",
+					border = "all",
+					border_size = 5,
+					T.scroll_label {
+						id = "message"
+					}
+				}
+			},
+			-- button box
+			T.row {
+				T.column {
+					vertical_alignment = "center",
+					horizontal_alignment = "center",
+					border = "all",
+					border_size = 5,
+					buttonbox
+				}
+			}
+		}
+	}
 
 	local function preshow()
 		-- here set all widget starting values
-		wesnoth.set_dialog_value ( cfg.title, "title" )
-		wesnoth.set_dialog_value ( cfg.message, "message" )
+		wesnoth.set_dialog_markup( true, "message" )
+		wesnoth.set_dialog_value ( cfg.title or "", "title" )
+		wesnoth.set_dialog_value ( cfg.message or "", "message" )
 	end
 
 	local function sync()
@@ -842,44 +1601,86 @@ end
 function wml_actions.prompt( cfg )
 	local variable = cfg.variable or helper.wml_error( "Missing variable= key in [prompt]" )
 
-	local buttonbox = T.grid { T.row { T.column { T.button { label = "OK", return_value = 1 } },
-						T.column { T.spacer { width = 10 } },
-					T.column { T.button { label = "Close", return_value = 2 } }
-				} }
-
-	local prompt_dialog = { T.helptip { id="tooltip_large" }, -- mandatory field
-				T.tooltip { id="tooltip_large" }, -- mandatory field
-				maximum_height = 600,
-				maximum_width = 800,
-				T.grid { -- Title, will be the object name
-					T.row { T.column { horizontal_alignment = "left",
-							grow_factor = 1,
-							border = "all",
-							border_size = 5,
-							T.label { definition = "title", id = "title" } } },
-					T.row { T.column { vertical_alignment = "center",
-							horizontal_alignment = "center",
-							border = "all",
-							border_size = 5,
-							T.scroll_label { id = "message" } } },
-					T.row { T.column { vertical_alignment = "center",
-							horizontal_alignment = "center",
-							border = "all",
-							border_size = 5,
-							T.text_box { id = "text" } } },
-					-- button box
-					T.row { T.column { vertical_alignment = "center",
-							horizontal_alignment = "center",
-							border = "all",
-							border_size = 5,
-							buttonbox } }
+	local buttonbox = T.grid {
+				T.row {
+					T.column {
+						T.button {
+							label = "OK",
+							return_value = 1
+						}
+					},
+					T.column {
+						T.spacer {
+							width = 10
+						}
+					},
+					T.column {
+						T.button {
+							label = "Close",
+							return_value = 2
+						}
 					}
 				}
+			}
+
+	local prompt_dialog = {
+		T.helptip { id="tooltip_large" }, -- mandatory field
+		T.tooltip { id="tooltip_large" }, -- mandatory field
+		maximum_height = 600,
+		maximum_width = 800,
+		T.grid { -- Title, will be the object name
+			T.row {
+				T.column {
+					horizontal_alignment = "left",
+					grow_factor = 1,
+					border = "all",
+					border_size = 5,
+					T.label {
+						definition = "title",
+						id = "title"
+					}
+				}
+			},
+			T.row {
+				T.column {
+					vertical_alignment = "center",
+					horizontal_alignment = "center",
+					border = "all",
+					border_size = 5,
+					T.scroll_label {
+						id = "message"
+					}
+				}
+			},
+			T.row {
+				T.column {
+					vertical_alignment = "center",
+					horizontal_alignment = "center",
+					border = "all",
+					border_size = 5,
+					T.text_box {
+						id = "text"
+					}
+				}
+			},
+			-- button box
+			T.row {
+				T.column {
+					vertical_alignment = "center",
+					horizontal_alignment = "center",
+					border = "all",
+					border_size = 5,
+					buttonbox
+				}
+			}
+		}
+	}
 
 	local function preshow()
 		-- here set all widget starting values
-		wesnoth.set_dialog_value ( cfg.title, "title" )
-		wesnoth.set_dialog_value ( cfg.message, "message" )
+		wesnoth.set_dialog_markup( true, "message" )
+		wesnoth.set_dialog_value ( cfg.title or "", "title" )
+		wesnoth.set_dialog_value ( cfg.message or "", "message" )
 		wesnoth.set_dialog_value ( cfg.text or "", "text" )
 	end
 
@@ -903,4 +1704,173 @@ function wml_actions.prompt( cfg )
 	elseif return_value == 2 or return_value == -2 then -- if user pressed Cancel or Esc
 		wesnoth.set_variable ( variable, "null" ) -- any better choice?
 	else helper.wml_error( ( tostring( _"Prompt" ) .. ": " .. tostring( _"Error, return value :" ) .. tostring( return_value ) ) ) end -- any unhandled case is handled here
+end
+
+function wml_actions.choice_box( cfg )
+	local variable = cfg.variable or helper.wml_error( "Missing variable= key in [choice_box]" )
+	local choice_values = {} -- it will be populated by preshow, and supply values to postshow
+
+	local buttonbox = T.grid {
+				T.row {
+					T.column {
+						T.button { 
+							label = _"OK",
+							return_value = 1
+						} 
+					},
+					T.column {
+						T.spacer { width = 10 }
+						},
+					T.column {
+						T.button {
+							label = _"Cancel",
+							return_value = 2
+						}
+					}
+				}
+			}
+
+	local toggle_grid = T.grid {
+				T.row {
+					T.column {
+						horizontal_alignment = "left",
+						border = "all",
+						border_size = 5,
+						T.image {
+							id = "choice_image",
+							linked_group = "image"
+							}
+						},
+					T.column {
+						horizontal_alignment = "left",
+						border = "all",
+						border_size = 5,
+						T.label {
+							text_alignment = "left",
+							id = "choice_description",
+							linked_group = "description"
+						}
+					},
+					T.column {
+						horizontal_alignment = "right",
+						border = "all",
+						border_size = 5,
+						T.label {
+							text_alignment = "right",
+							id = "choice_note",
+							linked_group = "note"
+						}
+					}
+				}
+			}
+
+	local listbox_dialog = {
+		T.tooltip { id = "tooltip_large" },
+		T.helptip { id = "tooltip_large" },
+		-- these linked groups are essential to ensure
+		-- that all the items in the listbox are nicely aligned
+		T.linked_group {
+			id = "image",
+			fixed_width = "true",
+			fixed_height = "true"
+		},
+		T.linked_group {
+			id = "description",
+			fixed_width = "true",
+			fixed_height = "true"
+		},
+		T.linked_group {
+			id = "note",
+			fixed_width = "true",
+			fixed_height = "true"
+		},
+		maximum_height = 600,
+		maximum_width = 800,
+		T.grid {
+			T.row {
+				T.column {
+					horizontal_alignment = "left",
+					border = "all",
+					border_size = 5,
+					T.label {
+						definition = "title",
+						id = "window_title"
+					}
+				}
+			},
+			T.row {
+				T.column {
+					horizontal_alignment = "left",
+					border = "all",
+					border_size = 5,
+					T.scroll_label {
+						id = "window_message",
+					}
+				}
+			},
+			T.row {
+				T.column {
+					border = "all",
+					border_size = 5,
+					T.listbox {
+						id = "choices_listbox",
+						horizontal_grow = true,
+						T.list_definition {
+							T.row {
+								T.column {
+									horizontal_grow = true,
+									T.toggle_panel {
+										toggle_grid
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			T.row {
+				T.column {
+					buttonbox
+				}
+			}
+		}
+	}
+
+	local function preshow()
+		wesnoth.set_dialog_value( cfg.title, "window_title" )
+		wesnoth.set_dialog_value( cfg.message, "window_message" )
+		wesnoth.set_dialog_markup( true, "window_message" )
+		
+		local counter = 1
+		for option in helper.child_range( cfg, "option") do
+			if option.value then
+				choice_values[counter] = option.value
+			else
+				choice_values[counter] = counter -- just the same number, for simplicity sake
+			end
+			wesnoth.set_dialog_value( option.image or "", "choices_listbox", counter, "choice_image" )
+			wesnoth.set_dialog_value( option.description or "", "choices_listbox", counter, "choice_description" )
+			wesnoth.set_dialog_markup( true, "choices_listbox", counter, "choice_description" )
+			wesnoth.set_dialog_value( option.note or "", "choices_listbox", counter, "choice_note" )
+			wesnoth.set_dialog_markup( true, "choices_listbox", counter, "choice_note" )
+			counter = counter + 1
+		end
+	end
+	local function sync()
+		local choice_index
+		local function postshow()
+			choice_index = wesnoth.get_dialog_value( "choices_listbox" ) -- read the chosen option...
+		end
+		local return_value = wesnoth.show_dialog( listbox_dialog, preshow, postshow )
+		return { return_value = return_value, choice = choice_values[choice_index] } -- and retrieve the associated value
+	end
+
+	local return_table = wesnoth.synchronize_choice(sync)
+	local return_value = return_table.return_value
+
+	if return_value == 1 or return_value == -1 then -- if used pressed OK or Enter
+		wesnoth.set_variable ( variable, return_table.choice )
+	elseif return_value == 2 or return_value == -2 then -- if user pressed Cancel or Esc
+		wesnoth.set_variable ( variable, "null" ) -- any better choice?
+	else helper.wml_error( ( tostring( _"Choice box" ) .. ": " .. tostring( _"Error, return value :" ) .. tostring( return_value ) ) ) end -- any unhandled case is handled here
 end

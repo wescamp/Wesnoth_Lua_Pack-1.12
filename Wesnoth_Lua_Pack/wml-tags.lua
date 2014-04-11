@@ -1,5 +1,5 @@
 
-local required_version = "1.11.0"
+local required_version = "1.11.9"
 local sufficient = wesnoth.compare_versions and wesnoth.compare_versions(required_version, "<=", wesnoth.game_config.version)
 if not sufficient then
 	error(string.format("The Wesnoth Lua Pack requires Battle for Wesnoth %s or greater!", required_version))
@@ -10,6 +10,10 @@ local wlp_utils = wesnoth.require "~add-ons/Wesnoth_Lua_Pack/wlp_utils.lua"
 
 -- to make code shorter. Yes, it's global.
 wml_actions = wesnoth.wml_actions
+
+-- support for translatable strings, custom textdomain
+local _ = wesnoth.textdomain "wesnoth-Wesnoth_Lua_Pack"
+-- #textdomain wesnoth-Wesnoth_Lua_Pack
 
 --! [animate_path]
 --! Alarantalara
@@ -440,41 +444,43 @@ function wml_actions.absolute_value(cfg)
 end
 
 function wml_actions.get_numerical_minimum(cfg)
-	local first_value = cfg.first_value or
-		helper.wml_error "[get_numerical_minimum] missing required first_value= attribute"
-	local other_value = cfg.other_value or
-		helper.wml_error "[get_numerical_minimum] missing required other_value= attribute"
-	local result_variable = cfg.result_variable or
-		helper.wml_error "[get_numerical_minimum] missing required result_variable= attribute"
-
-	local result
-
-	if other_value < first_value then
-		result = other_value
-	else
-		result = first_value
+	-- notify users of the change
+	if cfg.first_value then	helper.wml_error "first_value= attribute is no longer supported in [get_numerical_minimum], use values= instead" end
+	if cfg.other_value then	helper.wml_error "other_value= attribute is no longer supported in [get_numerical_minimum], use values= instead" end
+	-- values is a comma separated list
+	local values = cfg.values or helper.wml_error "[get_numerical_minimum] missing required value= attribute"
+	local result_variable = cfg.result_variable or helper.wml_error "[get_numerical_minimum] missing required result_variable= attribute"
+	
+	-- set an empty table
+	local args = { }
+	-- take the string before and split it on commas
+	for arg in wlp_utils.split( values ) do
+		-- convert all values to numbers. Strings, booleans, etc. will become nil, and spaces will be removed
+		table.insert( args, tonumber( arg ) )
 	end
 
-	wesnoth.set_variable(result_variable, result)
+	-- what's the lowest value? Convert the args table to a series of arguments and feed them to math.min
+	wesnoth.set_variable( result_variable, math.min( table.unpack( args ) ) )
 end
 
 function wml_actions.get_numerical_maximum(cfg)
-	local first_value = cfg.first_value or
-		helper.wml_error "[get_numerical_maximum] missing required first_value= attribute"
-	local other_value = cfg.other_value or
-		helper.wml_error "[get_numerical_maximum] missing required other_value= attribute"
-	local result_variable = cfg.result_variable or
-		helper.wml_error "[get_numerical_maximum] missing required result_variable= attribute"
-
-	local result
-
-	if other_value > first_value then
-		result = other_value
-	else
-		result = first_value
+	-- notify users of the change
+	if cfg.first_value then	helper.wml_error "first_value= attribute is no longer supported in [get_numerical_maximum], use values= instead" end
+	if cfg.other_value then	helper.wml_error "other_value= attribute is no longer supported in [get_numerical_maximum], use values= instead" end
+	-- values is a comma separated list
+	local values = cfg.values or helper.wml_error "[get_numerical_maximum] missing required value= attribute"
+	local result_variable = cfg.result_variable or helper.wml_error "[get_numerical_maximum] missing required result_variable= attribute"
+	
+	-- set an empty table
+	local args = { }
+	-- take the string before and split it on commas
+	for arg in wlp_utils.split( values ) do
+		-- convert all values to numbers. Strings, booleans, etc. will become nil, and trailing spaces will be removed
+		table.insert( args, tonumber( arg ) )
 	end
 
-	wesnoth.set_variable(result_variable, result)
+	-- what's the highest value? Convert the args table to a series of arguments and feed them to math.max
+	wesnoth.set_variable( result_variable, math.max( table.unpack( args ) ) )
 end
 
 function wml_actions.get_percentage(cfg)
@@ -655,4 +661,23 @@ function wml_actions.earthquake( cfg )
 		end
 		counter = counter - 1
 	until counter <= 0
+end
+
+-- [loot]: replacement for mainline LOOT macro
+-- supported parameters:
+-- StandardSideFilter
+-- amount, raises error if not number
+function wml_actions.loot( cfg )
+	local gold_amount = tonumber( cfg.amount ) or helper.wml_error( "Missing or wrong amount= value in [loot]" )
+	local sides = wesnoth.get_sides( cfg )
+	for index, side in ipairs( sides ) do
+		wml_actions.message {
+			side_for = side.side,
+			speaker = "narrator",
+			message = string.format( tostring( _"You retrieve %d pieces of gold." ), gold_amount ),
+			image = "wesnoth-icon.png",
+			sound = "gold.ogg"
+		}
+		side.gold = side.gold + gold_amount
+	end
 end

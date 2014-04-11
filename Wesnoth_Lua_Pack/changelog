@@ -1,3 +1,14 @@
+Version 1.7.0
+   * Removed file ai_helper.lua.
+   * Rewritten [get_numerical_minimum] and [get_numerical_maximum]
+   * Completely reworked layout and code of HTML readme
+   * Enabled Pango markup in [alert], [confirm], [prompt] and [item_dialog]
+   * Added [loot] tag, by Elvish_Hunter
+   * Added [choice_box] tag, by Elvish_Hunter
+   * Bumped Wesnoth version requirement to 1.11.9
+   * Fixed a bug in color selection that made [show_side_debug] not working
+   * Better indentation of the gui-tags.lua file
+
 Version 1.6.0:
    * Added [earthquake], by Elvish_Hunter.
    * Rewitten [narrate], to add support of all the additional tags and keys
